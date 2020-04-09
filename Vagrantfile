@@ -3,7 +3,7 @@
 
 Vagrant.configure("2") do |config|
 
-  config.vm.box = "geerlingguy/centos7"
+  config.vm.box = "bento/centos-7"
   
   config.ssh.insert_key = false
   # config.ssh.private_key_path="~/.ssh/id_rsa"
