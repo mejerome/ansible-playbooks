@@ -15,4 +15,4 @@ db
 # Variables for all the Servers
 [multi:vars]
 ansible_ssh_user=vagrant
-ansible_ssh_pass="vagrant"
+ansible_ssh_private_key_file=.vagrant/machines/app1/virtualbox/private_key
