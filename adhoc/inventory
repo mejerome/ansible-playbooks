@@ -15,4 +15,6 @@ db
 # Variables for all the Servers
 [multi:vars]
 ansible_ssh_user=vagrant
-ansible_ssh_private_key_file=~/ansible-projects/adhoc/.vagrant
+ansible_ssh_private_key_file=~/ansible-playbooks/adhoc/insecure_private_key
+
+update-alternatives --install /usr/bin/python python /usr/bin/python3.6
