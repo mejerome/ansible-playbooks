@@ -1,6 +1,7 @@
 ---
 - name: Install and configure apache
   hosts: all
+  become: true
   tasks:
     - name: Install apache
       package:
@@ -21,3 +22,5 @@
           dest: /etc/httpd/conf/httpd.conf
         - src: httpd-vhosts.conf
           dest: /etc/httpd/conf/httpd-vhosts.conf
+    - name: Make sure apache is started at boot and running
+      service: name=httpd state=stated enabled=yes
