@@ -1,3 +1,4 @@
 # exclude everything except directory foo/bar
-**.vagrant/
-**.vscode/
+.vagrant/
+.vscode/
+adhoc/.vagrant/
