@@ -1,0 +1,32 @@
+---
+- hosts: all
+  become: yes
+  vars:
+    node_apps_location: /usr/local/opt/node
+
+  tasks:
+
+    - name: Remove useless .deb packages and remove dependencies and update
+      apt:
+        autoremove: yes
+        autoclean: yes
+        update_cache: yes
+        upgrade: yes
+
+    - name: disable firewall
+      command: ufw disable
+    
+    - name: Install nodeJS and npm
+      apt:
+        name: ['nodejs','npm']
+        state: present
+
+    - name: Upgrade npm to the latest
+      npm: name=npm@latest global=yes state=present
+
+    - name: Install forever (to run our node.js app)
+      npm: name=forever global=yes state=present
+
+
+
+    
