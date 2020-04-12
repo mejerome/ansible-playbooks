@@ -1,3 +1,5 @@
-I am working on this project to sharpen my ansible skills.
-I will install an ansible server and then deploy a website 
+This is my project directory for ansible prokects following the Ansible for DevOps book as my reference.
+
 # ansible-playbooks
+1.  adhoc:
+2.  playbooks:
