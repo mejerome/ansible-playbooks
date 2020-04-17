@@ -2,3 +2,4 @@
 .vagrant/
 .vscode/
 adhoc/insecure_private_key
+roles/solr/solr*
