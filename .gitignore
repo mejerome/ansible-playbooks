@@ -2,4 +2,5 @@
 .vagrant/
 .vscode/
 **/insecure_private_key
+**/**/insecure_private_key
 
