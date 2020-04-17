@@ -1,5 +1,5 @@
 # exclude everything except directory foo/bar
 .vagrant/
 .vscode/
-adhoc/insecure_private_key
-roles/solr/insecure_private_key
+**/insecure_private_key
+
