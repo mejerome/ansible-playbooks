@@ -1,2 +1,48 @@
 ---
 # defaults file for docker-ce
+- hosts: docker
+  become: true
+  
+  tasks:
+    - name: Update yum packages
+      yum:
+        update_cache: yes     
+
+    - name: Ensure require packages are present
+      yum:
+        name:
+          - yum-utils
+          - device-mapper-persistent-data
+          - lvm2
+        state: present
+
+    - name: Ensure the set up of a stable docker repo
+      command: sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+      args:
+        creates: /etc/yum.repos.d/docker-ce.repo
+
+    
+
+    - name: Ensure containerd.io pre-requisite is present
+      dnf:
+        name: 'https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm'
+        state: present
+    
+    - name: install the nginx rpm from a remote repo
+      dnf:
+        name: 'https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm'
+        state: present
+
+    - name: Ensure docker-ce is present
+      yum:
+        name: docker-ce
+        state: present
+
+    - name: Start and Enable docker service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+    
+    
+      
