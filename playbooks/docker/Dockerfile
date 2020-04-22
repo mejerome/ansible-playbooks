@@ -6,5 +6,3 @@ MAINTAINER "Jerome Tabiri"
 
 # fix landing page error
 RUN cp -RT webapps.dist/ webapps/.
-
-COPY ./webapp.war /usr/local/tomcat/webapps

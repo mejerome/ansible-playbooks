@@ -3,6 +3,9 @@
 - hosts: docker
   become: true
 
+  vars:
+    docker_dir: /opt/docker
+
   handlers:
     - name: restart firewalld
       service:
@@ -27,7 +30,7 @@
 
     - name: ensure port 8080 is open and listening
       firewalld:
-        port: 8090/tcp
+        port: 8080/tcp
         permanent: yes
         state: enabled
       notify: restart firewalld
@@ -44,7 +47,7 @@
 
     - name: ensure docker working directory is present
       file:
-        path: /opt/docker
+        path: "{{ docker_dir }}"
         state: directory
         owner: ansadmin
 
@@ -74,14 +77,3 @@
         name: docker
         state: started
         enabled: yes
-
-# clean running containers and images     
-    - name: stop any old docker containers running
-      command: docker stop simple-devops-container
-      ignore_errors: yes
-
-    - name: remove stopped docker container
-      command: docker rm simple-devops-container
-      ignore_errors: yes
-
-    - name: 
