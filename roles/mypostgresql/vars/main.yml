@@ -1,0 +1,11 @@
+---
+# vars file for mypostgresql
+postgresql_version: "10.0"
+
+postgresql_python_library: python-psycopg2  
+
+postgresql_databases:
+  - name: test_db
+postgresql_users:
+  - name: odoo
+    password: odoo123
