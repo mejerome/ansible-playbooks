@@ -2,61 +2,86 @@
 # defaults file for docker-ce
 - hosts: docker
   become: true
+
+  handlers:
+    - name: restart firewalld
+      service:
+        name: firewalld
+        state: restarted
   
+    
   tasks:
-    - name: Update yum packages
+    # Pre-Tasks
+    - name: update yum packages
       yum:
         update_cache: yes     
 
-    - name: Ensure require packages are present
+    - name: ensure require packages are present
       yum:
         name:
           - yum-utils
           - device-mapper-persistent-data
           - lvm2
+          - wget
         state: present
 
-    - name: Ensure the set up of a stable docker repo
-      command: sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+    - name: ensure port 8080 is open and listening
+      firewalld:
+        port: 8090/tcp
+        permanent: yes
+        state: enabled
+      notify: restart firewalld
+
+      
+    - name: ensure user ansadmin is present and part of docker group
+      user:
+        name: ansadmin
+        comment: ansible user for running plays
+        password: ansadmin
+        password_lock: no
+        group: docker
+        state: present
+
+    - name: ensure docker working directory is present
+      file:
+        path: /opt/docker
+        state: directory
+        owner: ansadmin
+
+# Install docker-ce
+    - name: ensure the set up of a stable docker repo
+      command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
       args:
         creates: /etc/yum.repos.d/docker-ce.repo
-
     
+    - name: fetch containerd file from source if not present
+      command:
+        cmd: wget https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm /tmp/containerd.io-1.2.6-3.3.el7.x86_64.rpm
+        creates: /tmp/containerd.io-1.2.6-3.3.el7.x86_64.rpm
 
-    - name: Ensure containerd.io pre-requisite is present
+    - name: install the containerd.io dependency is present
       dnf:
-        name: 'https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm'
-        state: present
-    
-    - name: install the nginx rpm from a remote repo
-      dnf:
-        name: 'https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm'
+        name: /tmp/containerd.io-1.2.6-3.3.el7.x86_64.rpm
         state: present
 
-    - name: Ensure docker-ce is present
+    - name: ensure docker-ce is present
       yum:
         name: docker-ce
         state: present
 
-    - name: Start and Enable docker service
+    - name: start and enable docker service
       service:
         name: docker
         state: started
         enabled: yes
-    
+
+# clean running containers and images     
     - name: stop any old docker containers running
       command: docker stop simple-devops-container
       ignore_errors: yes
 
     - name: remove stopped docker container
-      command: docker rm simple-docker-container
+      command: docker rm simple-devops-container
       ignore_errors: yes
 
-    - name: building docker image
-      command: docker build -t simple-devops-image .
-      args:
-        chdir: /opt/docker
-
-    
-    
-      
+    - name: 
