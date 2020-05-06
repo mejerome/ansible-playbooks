@@ -1,0 +1,20 @@
+vcl 4.0;
+
+import directors;
+
+{% for host in groups['lamp-www'] %}
+backend www{{ loop.index }} {
+    .host = "{{ host }}";
+    .port = "80";
+}
+{% endfor %}
+
+sub vcl_init {
+    new vdir = diretors.random();
+{% for host in group['lamp-www'] %}
+    vdir.add_backend(www{{ loop.index }}, 1);
+{% endfor %}
+}
+
+sub vcl_recv {
+    set req.backend_hint = vdir.backend();

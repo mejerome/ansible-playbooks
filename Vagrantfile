@@ -2,23 +2,20 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-
-  config.vm.box = "bento/centos-7"
-  
   config.ssh.insert_key = false
-  # config.ssh.private_key_path="~/.ssh/id_rsa"
-  config.ssh.password="vagrant"
-  
-  config.vm.synced_folder ".", "/vagrant", disabled: true
-  
   config.vm.provider :virtualbox do |v|
-    v.memory = 1024
-    v.linked_clone = true
+    v.linked_clone =true
   end
 
-  config.vm.define "app1" do |app1|
-    app1.vm.hostname = "webapp1.lab"
-    app1.vm.network :private_network, ip: "192.168.56.106"
+  config.vm.define "inventory1" do |inventory|
+    inventory.vm.hostname = "inventory1.lab"
+    inventory.vm.box = "geerlingguy/ubuntu1804"
+    inventory.vm.network :private_network, ip: "192.168.28.71"
   end
 
-end 
+  config.vm.define "inventory2" do |inventory|
+    inventory.vm.hostname = "inventory2.lab"
+    inventory.vm.box = "geerlingguy/ubuntu1804"
+    inventory.vm.network :private_network, ip: "192.168.28.72"
+  end
+end

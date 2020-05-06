@@ -1,0 +1,26 @@
+---
+- hosts: lamp-www
+  become: yes
+
+  vars_files:
+    - vars.yml
+  
+  roles:
+    - geerlingguy.firewall
+    - geerlingguy.repo-epel
+    - geerlingguy.apache
+    - geerlingguy.php
+    - geerlingguy.php-mysql
+    - geerlingguy.php-memcached
+
+  tasks:
+    - name: remove the apache test page.
+      file:
+        path: /var/www/html/index.html
+        state: absent
+
+    - name: copy our fancy server-specific homepage.
+      template:
+        src: templates/index.php.j2
+        dest: /var/www/html/index.php
+        
