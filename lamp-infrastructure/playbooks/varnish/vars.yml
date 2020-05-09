@@ -1,5 +1,5 @@
 ---
-firewall_allw_tcp_ports:
+firewall_allowed_tcp_ports:
   - "22"
   - "80"
 
