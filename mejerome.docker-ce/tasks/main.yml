@@ -1,0 +1,38 @@
+---
+# tasks file for mejerome.docker-ce
+
+
+
+
+
+
+
+# - name: update yum packages and install dependencies
+#   yum:
+#     name:
+#       - yum-utils
+#       - device-mapper-persistent-data
+#       - lvm2
+#       - wget
+#     update_cache: yes
+
+# # - name: ensure docker user is present and part of docker group
+# #   user:
+# #     name: dockeradmin
+# #     comment: user for running docker
+# #     group: docker
+# #     state: present
+# - name: ensure docker working directory is present
+#   file:
+#     path: "{{ docker_dir }}"
+#     state: directory
+
+# - name: ensure the set up of a stable docker repo
+#   command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+#   args:
+#     creates: /etc/yum.repos.d/docker-ce.repo
+
+# - name: fetch containerd file from source if not present
+#   command:
+#     cmd: wget https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm /tmp/containerd.io-1.2.6-3.3.el7.x86_64.rpm
+#     creates: /tmp/containerd.io-1.2.6-3.3.el7.x86_64.rpm
