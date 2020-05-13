@@ -1,3 +1,0 @@
----
-# vars file for mejerome.docker-ce
-docker_dir: /opt/docker

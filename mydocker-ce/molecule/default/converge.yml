@@ -1,0 +1,7 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+    - name: "Include mydocker-ce"
+      include_role:
+        name: "mydocker-ce"

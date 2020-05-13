@@ -1,0 +1,24 @@
+---
+# tasks file for mydocker-ce
+- name: add docker-ce repository.
+  become: yes
+  
+
+# - name: fail this playbook
+#   debug:
+#     msg: result.stdout
+
+- name: ensure to update repos libraries
+  dnf: update_cache=yes
+
+- name: install the containerd.io rpm from a remote repo
+  become: yes
+  yum:
+    name: https://download.docker.com/linux/centos/7/x86_64/stable/Packages/containerd.io-1.2.6-3.3.el7.x86_64.rpm
+    state: present
+
+- name: install the latest version of docker-ce package
+  become: yes
+  yum:
+    name: docker-ce
+    state: present
