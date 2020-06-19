@@ -19,7 +19,8 @@ Vagrant.configure("2") do |config|
   config.vm.define "node1" do |node1|
     node1.vm.hostname = "node1.lab"
     node1.vm.box = "geerlingguy/ubuntu1804"
-    node1.vm.network :private_network, ip: "192.168.8.5"
+    node1.vm.synced_folder ".", "/vagrant", disabled: true
+    # node1.vm.network :private_network, ip: "192.168.8.5"
   end
-  config.vm.provision "shell", inline: $script
+  # config.vm.provision "shell", inline: $script
 end
