@@ -5,6 +5,7 @@ firewall_allowed_tcp_ports:
   - "80"
 
 mysql_users: limeuser
+mysql_user_passord: secret
 # mysql_replication_user: {name: 'replication', password: 'secret'}
 mysql_databases:
   - name: limesurvey_db
@@ -14,4 +15,3 @@ mysql_databases:
 php_version: '7.2'
 limesurvery_url: "https://download.limesurvey.org/latest-stable-release/limesurvey4.3.5+200721.zip"
 home_directory: "/home/jerome/"
-
