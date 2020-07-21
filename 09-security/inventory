@@ -1,7 +1,0 @@
-[centos-server]
-192.168.8.5
-
-[centos-server:vars]
-#ansible_port=2849    
-ansible_user=vagrant
-ansible_password=vagrant
