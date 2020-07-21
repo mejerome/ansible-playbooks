@@ -17,7 +17,7 @@
     - name: Create dynamic MySQL variables.
       set_fact:
         mysql_users:
-          - name: ls_user
+          - name: "{{ mysql_users }}"
             host: "localhost"
             password: secret
             priv: "*.*:ALL"
@@ -77,3 +77,9 @@
         group: www-data
         recurse: true
         state: directory
+
+    - name: Remove default nginx website
+      file:
+        path: "/etc/nginx/sites-enabled/default"
+        state: absent
+      notify: restart nginx
