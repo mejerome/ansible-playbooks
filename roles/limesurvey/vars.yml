@@ -1,0 +1,17 @@
+---
+firewall_allowed_tcp_ports:
+  - "22"
+  - "3306"
+  - "80"
+
+mysql_users: limeuser
+# mysql_replication_user: {name: 'replication', password: 'secret'}
+mysql_databases:
+  - name: limesurvey_db
+    collation: utf8_general_ci
+    encoding: utf8
+
+php_version: '7.2'
+limesurvery_url: "https://download.limesurvey.org/latest-stable-release/limesurvey4.3.5+200721.zip"
+home_directory: "/home/jerome/"
+

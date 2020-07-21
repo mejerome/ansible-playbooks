@@ -1,0 +1,79 @@
+---
+- hosts: limesurvey
+  become: true
+
+  vars_files:
+    - vars.yml
+
+  pre_tasks:
+    - name: setup timzone on ubuntu server
+      command: echo "Africa/Accra" | sudo tee /etc/timezone && sudo dpkg-reconfigure --frontend noninteractive tzdata
+      when: ansible_os_family == 'Debian'
+    
+    - name: Update apt cache.
+      apt: update_cache=true cache_valid_time=1000 upgrade=dist
+      when: ansible_os_family == 'Debian'
+   
+    - name: Create dynamic MySQL variables.
+      set_fact:
+        mysql_users:
+          - name: ls_user
+            host: "localhost"
+            password: secret
+            priv: "*.*:ALL"
+
+  roles:
+    - geerlingguy.nginx
+    - geerlingguy.mysql
+    - geerlingguy.php-versions
+    - geerlingguy.php
+    - geerlingguy.php-mysql
+
+  tasks:
+    - name: ensure ntp package is installed
+      apt:
+        name:
+          - ntp
+          - unzip
+          - vim
+        state: present
+
+    - name: make sure ntp service is restarted
+      service:
+        name: ntp
+        state: restarted
+    
+    - name: ensure unzip package is installed
+      apt: name=unzip state=present
+    
+    - name: Configure nginx for for limesurvey
+      template:
+        src: templates/limesurvey.conf.j2
+        dest: /etc/nginx/sites-available/limesurvey.conf
+    
+    - name: Create a symbolic link
+      file:
+        src: /etc/nginx/sites-available/limesurvey.conf
+        dest: /etc/nginx/sites-enabled/limesurvey.conf
+        state: link
+
+    - name: Unarchive limesurvey file that needs to be downloaded from their website 
+      unarchive:
+        src: "{{ limesurvery_url }}"
+        dest: "{{ home_directory }}"
+        remote_src: yes
+        creates: "{{ home_directory }}/limesurvey"
+
+    - name: Copy limesurvey directory to /var/www/limesurvey
+      copy:
+        src: "{{ home_directory }}/limesurvey"
+        dest: /var/www
+        remote_src: true
+
+    - name: Ensure /var/www/limesurvey has the right permissions
+      file:
+        path: /var/www/limesurvey
+        owner: www-data
+        group: www-data
+        recurse: true
+        state: directory

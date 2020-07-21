@@ -2,14 +2,16 @@
 # tasks file for mydocker-ce
 - name: add docker-ce repository.
   become: yes
-  
+  command: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  args:
+    creates: /etc/yum.repos.d/docker-ce.repo
 
 # - name: fail this playbook
 #   debug:
 #     msg: result.stdout
 
 - name: ensure to update repos libraries
-  dnf: update_cache=yes
+  yum: update_cache=yes
 
 - name: install the containerd.io rpm from a remote repo
   become: yes
@@ -22,3 +24,26 @@
   yum:
     name: docker-ce
     state: present
+
+- name: start and enable docker server.
+  become: yes
+  service:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: add user dockeradmin user to docker group
+  become: yes
+  user:
+    name: dockeradmin
+    group: docker
+    state: present  
+
+- name: Allow 'docker' group to have passwordless sudo
+  become: yes
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^%docker'
+    line: '%docker ALL=(ALL) NOPASSWD: ALL'
+    validate: 'visudo -cf %s'

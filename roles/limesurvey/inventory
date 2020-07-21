@@ -1,0 +1,9 @@
+[limesurvey]
+192.168.153.7
+
+[limesurvey:vars]
+ansible_user=jerome
+# ansible_ssh_private_key_file=/mnt/c/Users/Jerome\ Tabiri/.vagrant.d/insecure_private_keySSS
+ansible_password="password"
+
+ansible_become_password="password"

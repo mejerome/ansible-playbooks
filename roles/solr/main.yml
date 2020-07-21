@@ -2,41 +2,44 @@
 - hosts: all
   become: true
 
-  vars_files: 
+  vars_files:
     - vars.yml
 
   pre_tasks:
-    - name: Update apt cache if needed.
-      apt: update_cache=true cache_valid_time=3600
+    - name: Upgrade all packages to the latest version
+      apt:
+        name: "*"
+        state: latest
 
-  handlers:
-    - name: restart solr
-      service: name=solr state=restarted
+    - name: Update apt cache if needed.
+      apt: update_cache=true cache_valid_time=1000
 
   tasks:
     - name: Install Java.
-      apt: name=openjdk-11-jdk state=present
+      apt: name=openjdk-8-jdk state=present
 
-    - name: Download Solr package with check (sha256)
+    - name: Download Solr.
       get_url:
-        url: "https://downloads.apache.org/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz"
+        url: "https://archive.apache.org/dist/lucene/solr/{{ solr_version }}/solr-{{ solr_version }}.tgz"
         dest: "{{ download_dir }}/solr-{{ solr_version }}.tgz"
-        # checksum: sha256:b5bb9d8014a0f9b1d61e21e796d78dccdf1352f23cd32812f4850b878ae4944c
-  
-    - name: Expand Solr
+        checksum: "{{ solr_checksum }}"
+
+    - name: Expand Solr.
       unarchive:
         src: "{{ download_dir }}/solr-{{ solr_version }}.tgz"
         dest: "{{ download_dir }}"
-        remote_src: yes
+        remote_src: true
         creates: "{{ download_dir }}/solr-{{ solr_version }}/README.txt"
 
-    - name: Run solr installation script
+    - name: Run Solr installation script.
       command: >
-        bash {{ download_dir }}/solr-{{ solr_version }}/bin/install_solr_service.sh {{ download_dir }}/solr-{{ solr_version }}.tgz
+        {{ download_dir }}/solr-{{ solr_version }}/bin/install_solr_service.sh
+        {{ download_dir }}/solr-{{ solr_version }}.tgz
         -i /opt
+        -d /var/solr
         -u solr
         -s solr
         -p 8983
         creates={{ solr_dir }}/bin/solr
-
-      
+    - name: Ensure solr is started and enabled on boot.
+      service: name=solr state=started enabled=yes
