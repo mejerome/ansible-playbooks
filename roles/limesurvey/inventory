@@ -1,9 +1,9 @@
 [limesurvey]
-192.168.153.7
+ec2-34-238-159-231.compute-1.amazonaws.com
 
 [limesurvey:vars]
-ansible_user=jerome
-# ansible_ssh_private_key_file=/mnt/c/Users/Jerome\ Tabiri/.vagrant.d/insecure_private_keySSS
-ansible_password="password"
+ansible_user=ubuntu
+ansible_ssh_private_key_file=/home/jerome/limesurvey.pem
+# ansible_password="password"
 
-ansible_become_password="password"
+# ansible_become_password="password"

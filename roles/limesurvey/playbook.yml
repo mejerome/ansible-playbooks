@@ -1,5 +1,5 @@
 ---
-- hosts: limesurvey
+- hosts: all
   become: true
 
   vars_files:
@@ -22,23 +22,19 @@
             password: "{{ mysql_user_passord }}"
             priv: "*.*:ALL"
 
-  roles:
-    - geerlingguy.nginx
-    - geerlingguy.mysql
-    - geerlingguy.php-versions
-    - geerlingguy.php
-    - geerlingguy.php-mysql
-
-  tasks:
     - name: ensure required packages are installed
       apt:
         name:
           - ntp
           - unzip
           - vim
+          - python3-pip
           - php{{ php_version }}-ldap
           - php{{ php_version }}-zip
         state: present
+        
+    - name: Ensure that pip3-PyMySQL is installed
+      command: pip3 install PyMySQL 
 
     - name: make sure ntp service is restarted
       service:
@@ -47,7 +43,15 @@
     
     - name: ensure unzip package is installed
       apt: name=unzip state=present
-    
+
+  roles:
+    - geerlingguy.nginx
+    - geerlingguy.mysql
+    - geerlingguy.php-versions
+    - geerlingguy.php
+    - geerlingguy.php-mysql
+
+  tasks:    
     - name: Configure nginx for for limesurvey
       template:
         src: templates/limesurvey.conf.j2

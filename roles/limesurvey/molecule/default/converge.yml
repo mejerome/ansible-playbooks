@@ -1,0 +1,5 @@
+---
+- name: Converge
+  hosts: all
+  tasks:
+- import_playbook: ../../playbook.yml
