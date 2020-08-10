@@ -1,0 +1,62 @@
+---
+- hosts: localhost
+  tasks:
+    - name: Get my current IP address
+      uri:
+        url: http://checkip.amazonaws.com/
+        return_content: yes
+      register: my_ip
+
+    - name: Create simple security group
+      ec2_group:
+        name: webservers
+        description: A security group for my current IP 
+        region: us-east-1
+        # state: absent
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: "{{ my_ip.content | replace('\n', '') }}/32"
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: "{{ my_ip.content | replace('\n', '') }}/32"
+        rules_egress:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+      register: webservers_group
+    
+    - name: Create the ELB only listening over port 80
+      ec2_elb_lb:
+        name: jerome-load-balancer
+        state: present
+        region: us-east-1
+        zones:
+          - us-east-1a
+          - us-east-1b
+        listeners:
+          - protocol: http
+            load_balancer_port: 80
+            instance_port: 80
+      register: elb
+
+
+    - name: Create EC2 instances
+      ec2:
+        key_name: jerome
+        instance_type: t2.nano
+        image: ami-f2b39792
+        region: us-east-1
+        group_id:
+          - "{{ webservers_group.group_id }}"
+          - "{{ elb.elb.security_group_ids | first }}"
+        wait: yes
+        instance_tags:
+          application: jerome
+        exact_count: 2
+        count_tag:
+          application: jerome
+      register: ec2_instances
