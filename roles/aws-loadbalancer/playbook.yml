@@ -48,7 +48,7 @@
       ec2:
         key_name: jerome
         instance_type: t2.nano
-        image: ami-f2b39792
+        image: ami-0ac80df6eff0e70b5
         region: us-east-1
         group_id:
           - "{{ webservers_group.group_id }}"

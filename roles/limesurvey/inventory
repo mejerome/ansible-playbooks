@@ -1,5 +1,5 @@
 [limesurvey]
-ec2-34-238-159-231.compute-1.amazonaws.com
+ec2-34-229-56-52.compute-1.amazonaws.com
 
 [limesurvey:vars]
 ansible_user=ubuntu

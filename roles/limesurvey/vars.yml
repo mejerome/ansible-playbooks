@@ -13,5 +13,5 @@ mysql_databases:
     encoding: utf8
 php_webserver_daemon: "nginx"
 php_version: '7.2'
-limesurvery_url: "https://download.limesurvey.org/latest-stable-release/limesurvey4.3.5+200721.zip"
+limesurvery_url: "https://download.limesurvey.org/latest-stable-release/limesurvey4.3.9+200806.zip"
 home_directory: "/home/ubuntu/"
