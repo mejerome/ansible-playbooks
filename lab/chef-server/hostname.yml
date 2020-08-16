@@ -1,0 +1,21 @@
+---
+# Set the hostname of and add entry to hosts file
+- name: Set hostname to chef-server if not defined
+  hostname:
+    name: chef-server
+  when: chefserver_hostname is defined
+
+- name: Resolve hostname via /etc/hosts to resolve `hostname -f`
+  lineinfile: 
+    dest: /etc/hosts 
+    line: "{{ansible_default_ipv4.address}} {{ansible_fqdn}} {{ansible_hostname}}"
+  when: chefserver_hostname is defined
+
+- name: Fix resolve.conf for servers running from Gh
+  lineinfile:
+    path: /etc/resolv.conf
+    regexp: '^nameserver '
+    line: nameserver 8.8.8.8
+    owner: root
+    group: root
+    mode: '0644'
