@@ -14,23 +14,29 @@
 
 - name: Install and Configure Chef Server
   block:
-    - name: install the server
-      apt:
-        deb: "https://packages.chef.io/files/stable/chef-server/{{ chefserver_version }}/ubuntu/18.04/chef-server-core_{{ chefserver_version }}-1_amd64.deb"
-        state: present
-        update_cache: yes
+    # - name: Download file with check (sha256)
+    #   get_url:
+    #     url: "https://packages.chef.io/files/stable/chef-server/{{ chefserver_version }}/ubuntu/18.04/chef-server-core_{{ chefserver_version }}-1_amd64.deb"
+    #     dest: "/tmp/chef-server-core_{{ chefserver_version }}-1_amd64.deb"
+        # checksum: "sha256: {{ chefserver_checksum }}"
 
-    - name: Configure the server
-      command: chef-server-ctl reconfigure
-      become: yes
+    - name: Install the server
+      apt:
+        deb: "/srv/website/chef-server-core_13.2.0-1_amd64.deb"
+        state: present
   when: check_package.rc != 0
 
 - name: Install management console
   block:
-    - name: Install management component
-      shell: | 
-        sudo chef-server-ctl install chef-manage --accept-license
+    - name: Configure the server
+      shell: |
+        chef-server-ctl reconfigure
         yes
+      become: yes
+      
+    - name: Install management component
+      command: chef-server-ctl install chef-manage --accept-license
+      become: yes
         
     - name: Reconfigure the server
       shell: sudo chef-server-ctl reconfigure --accept-license

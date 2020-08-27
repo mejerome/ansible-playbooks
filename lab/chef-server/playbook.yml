@@ -1,5 +1,5 @@
 ---
-- hosts: all
+- hosts: chef
   become: yes
   
   vars_files:

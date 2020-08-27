@@ -1,0 +1,6 @@
+---
+- name: reconfigure chef-server-ctl
+  command: sudo chef-server-ctl reconfigure
+
+- name: restart chef-server-ctl
+  command: sudo chef-server-ctl restart

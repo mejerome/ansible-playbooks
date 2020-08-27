@@ -3,7 +3,7 @@
 - name: Ensure required packages are installed
   apt:
     name:
-      - ntp
+      # - ntp
       - unzip
       - vim
       - wget
@@ -11,7 +11,7 @@
       - unzip
     state: present
 
-- name: Make sure ntp service is restarted
-  service:
-    name: ntp
-    state: started
+# - name: Make sure ntp service is restarted
+#   service:
+#     name: ntp
+#     state: started
