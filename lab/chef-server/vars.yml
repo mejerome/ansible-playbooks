@@ -1,0 +1,9 @@
+---
+chefserver_version: 13.2.0
+chefadmin_name: chefadmin
+chefadmin_email: jerome@sysloggh.com
+chefadmin_password: 3rp@dm1n
+chef_organization: syslogsolution
+chef_organization_full_name: "Syslog Solution, Ltd."
+install_management_console: false
+create_default_credential: true

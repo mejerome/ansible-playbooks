@@ -28,6 +28,7 @@
           - ntp
           - unzip
           - vim
+          - unzip
           - python3-pip
           - php{{ php_version }}-ldap
           - php{{ php_version }}-zip
@@ -40,9 +41,6 @@
       service:
         name: ntp
         state: restarted
-    
-    - name: ensure unzip package is installed
-      apt: name=unzip state=present
 
   roles:
     - geerlingguy.nginx

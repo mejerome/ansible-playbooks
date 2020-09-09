@@ -3,3 +3,4 @@
 .vscode/
 **/insecure_private_key
 ansible-dev
+lab/src

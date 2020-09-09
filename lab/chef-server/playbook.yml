@@ -1,0 +1,13 @@
+---
+- hosts: chef
+  become: yes
+  
+  vars_files:
+    - vars.yml
+
+  tasks:
+  - include_tasks: base.yml
+  - include_tasks: hostname.yml
+  - include_tasks: chefinstall.yml
+  - include_tasks: chefconfig.yml
+ 
