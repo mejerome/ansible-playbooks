@@ -37,10 +37,10 @@
     - name: Ensure that pip3-PyMySQL is installed
       command: pip3 install PyMySQL 
 
-    - name: make sure ntp service is restarted
-      service:
-        name: ntp
-        state: restarted
+    # - name: make sure ntp service is restarted
+    #   service:
+    #     name: ntpd
+    #     state: restarted
 
   roles:
     - geerlingguy.nginx
