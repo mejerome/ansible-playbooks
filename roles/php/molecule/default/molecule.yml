@@ -4,8 +4,8 @@ dependency:
 driver:
   name: docker
 platforms:
-  - name: test-ubuntu
-    image: geerlingguy/docker-ubuntu1804-ansible
+  - name: instance
+    image: "geerlingguy/docker-ubuntu2004-ansible:lastest"
     command: /sbin/init
     tmpfs:
       - /run
