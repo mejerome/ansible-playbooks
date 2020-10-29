@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: yes
+
+  tasks:
+    - name: Create group named lamp-www
+      group:
+        name: "lamp-www"

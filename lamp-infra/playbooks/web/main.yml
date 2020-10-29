@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 ---
-- hosts: lamp-web
+- hosts: lamp-www
   become: yes
 
   vars_files:
@@ -23,19 +22,3 @@
       template:
         src: templates/index.php.j2
         dest: /var/www/html/index.php
-=======
----
-- hosts: all
-  become: yes
-
-  vars_files:
-    - vars.yml
-
-  roles:
-    - geerlingguy.firewall
-    - geerlingguy.apache
-    - geerlingguy.php
-    - geerlingguy.php-mysql
-    - geerlingguy.php-memcached
-  
->>>>>>> 93c80267e76f428f009fb9a29c79501336876609
