@@ -14,4 +14,6 @@ For the purpose of demonstration, Varnish's caching is completely disabled, so y
 1. I start out with preparing a vagrantfile with all the servers as listed above.
 2. Create and inventory file under the inventory directory where access to the above servers as prepared by the vagrantfile
 3. Prepare requirements.yml file that includes all the roles required for this playbook.
-4. Create a configure.yml file 
+4. Create a configure.yml file that is going to import playbooks from the playbooks folder.
+5. Create a playbooks directory under which the individual roles for each server.
+6. 
