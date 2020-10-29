@@ -7,7 +7,7 @@
 
   roles:
     - geerlingguy.firewall
-    - sys_fs.varnish
+    - geerlingguy.varnish
 
   tasks:
     - name: Copy Varnish default.vcl.
