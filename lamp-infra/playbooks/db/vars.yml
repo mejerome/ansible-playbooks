@@ -1,0 +1,17 @@
+firewall_allowed_tcp_ports:
+  - "22"
+  - "3306"
+
+mysql_replication_user: {name: 'replication', password: 'secret'}
+
+
+mysql_root_password: root
+mysql_databases:
+  - name: syslog_database
+    collation: utf8_general_ci
+    encoding: utf8
+mysql_users:
+  - name: company_user
+    host: "%"
+    password: secret
+    priv: "example_db.*:ALL"

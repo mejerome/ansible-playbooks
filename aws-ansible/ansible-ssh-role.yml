@@ -1,0 +1,9 @@
+---
+- hosts: webserver
+  gather_facts: no
+
+  tasks:
+    - name: Running role
+      include_role:
+        name: httpdserver
+

@@ -1,0 +1,7 @@
+---
+- import_playbook: playbooks/common/main.yml
+- import_playbook: playbooks/haproxy/main.yml
+- import_playbook: playbooks/web/main.yml
+- import_playbook: playbooks/db/main.yml
+- import_playbook: playbooks/memcached/main.yml
+

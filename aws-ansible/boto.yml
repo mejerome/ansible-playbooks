@@ -1,0 +1,14 @@
+---
+- hosts: localhost
+  gather_facts: no
+
+  vars_files:
+    - cred.yml
+
+  tasks:
+    - name: Ensure boto3 is install locally
+      pip:
+        name: boto3
+        state: present
+
+    
