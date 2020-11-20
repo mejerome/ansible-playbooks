@@ -1,0 +1,18 @@
+---
+- name: launching ec2 instance for webserver
+  ec2:
+    key_name: jerome
+    instance_type: t2.micro
+    image: ami-0d9a6b6c74aafb9d7
+    wait: true
+    group: webserverSG
+    count: 1
+    vpc_subnet_id: subnet-29303853
+    assign_public_ip: yes
+    region: us-east-2
+    state: present
+    aws_access_key: "{{ access_key }}"
+    aws_secret_key: "{{ secret_key }}"
+    instance_tag:
+      Name: webserver
+  register: ec2
