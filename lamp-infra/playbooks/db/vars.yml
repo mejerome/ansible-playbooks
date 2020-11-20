@@ -11,7 +11,7 @@ mysql_databases:
     collation: utf8_general_ci
     encoding: utf8
 mysql_users:
-  - name: jerome
+  - name: company_user
     host: "%"
-    password: "erpadmin"
+    password: secret
     priv: "example_db.*:ALL"
