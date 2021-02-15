@@ -1,6 +1,7 @@
 # exclude everything except directory foo/bar
 .vagrant/
 .vscode/
+.terraform/
 **/insecure_private_key
 ansible-dev
 lab/src
