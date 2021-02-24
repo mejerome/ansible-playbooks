@@ -6,3 +6,6 @@
     - name: Create group named lamp-www
       group:
         name: "lamp-www"
+
+  roles:
+    - cloudalchemy.node-exporter

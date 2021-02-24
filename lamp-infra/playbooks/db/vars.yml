@@ -1,9 +1,9 @@
 firewall_allowed_tcp_ports:
   - "22"
   - "3306"
+  - "9100"
 
-mysql_replication_user: {name: 'replication', password: 'secret'}
-
+mysql_replication_user: { name: "replication", password: "secret" }
 
 mysql_root_password: root
 mysql_databases:

@@ -5,6 +5,7 @@
 192.168.2.5
 192.168.2.6
 192.168.2.7
+192.168.2.8
 
 [lamp-varnish]
 192.168.2.2
@@ -22,6 +23,9 @@
 
 [lamp-memcached]
 192.168.2.7
+
+[lamp-metrics]
+192.168.2.8
 
 [servers:vars]
 ansible_user=vagrant

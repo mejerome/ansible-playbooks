@@ -4,4 +4,4 @@
 - import_playbook: playbooks/web/main.yml
 - import_playbook: playbooks/db/main.yml
 - import_playbook: playbooks/memcached/main.yml
-
+- import_playbook: playbooks/metrics/main.yml

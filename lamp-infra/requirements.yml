@@ -8,4 +8,6 @@
 - src: geerlingguy.php-memcached
 - src: geerlingguy.mysql
 - src: geerlingguy.memcached
-
+- src: cloudalchemy.prometheus
+- src: cloudalchemy.node-exporter
+- src: cloudalchemy.grafana

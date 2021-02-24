@@ -1,0 +1,11 @@
+---
+- hosts: lamp-metrics
+  become: true
+
+  vars_files:
+    - vars.yml
+
+  roles:
+    - cloudalchemy.prometheus
+    - cloudalchemy.grafana
+    - geerlingguy.firewall
