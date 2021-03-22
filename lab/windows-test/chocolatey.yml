@@ -1,6 +1,0 @@
----
-- host: winhost
-  gather_facts: no
-  tasks:
-   - name: Install Chocolatey on Windows10
-     win_chocolatey: name=procexp  state=present
