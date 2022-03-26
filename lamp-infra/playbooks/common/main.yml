@@ -5,4 +5,12 @@
   tasks:
     - name: Create group named lamp-www
       group:
+<<<<<<< Updated upstream
         name: "lamp-www"
+=======
+        name: "lamp-www"
+
+  roles:
+    - cloudalchemy.node_exporter
+
+>>>>>>> Stashed changes
